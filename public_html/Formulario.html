@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <title>Cola na escola</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap-notify.min.js" type="text/javascript"></script>
+        <script src="js/jquery.validate.min.js" type="text/javascript"></script>		
+        <script src="js/additional-methods.min.js" type="text/javascript"></script>		
+        <script src="js/jquery.mask.min.js" type="text/javascript"></script>
+        <script src="js/messages_pt_BR.js" type="text/javascript"></script>       
+
+        <script type="text/javascript">
+            jQuery.validator.addMethod("anoAntigo",
+                    function (value, element) {
+                        var data = value.split("/")
+                        var ano = parseInt(data[2]) //terceira posição da data
+                        var dataAtual = new Date()
+                        var anoAtual = dataAtual.getFullYear()
+                        if (ano < anoAtual) {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }, "Ano tem que ser antigo")
+                     jQuery.validator.addMethod("emaill", function (value, element) {
+                if (value.indexOf("@") < value.indexOf(".")) {
+                    return true
+                } else {
+                    return false
+                }
+            }, "Tem que ser o email valido")
+            jQuery.validator.addMethod("estadoo", function (value, element) {
+                if (value.indexOf("Selecione") < 0) {
+                    return true
+                } else {
+                    return false
+                }
+            }, "Por favor selesione um estado")
+
+           
+
+            $(document).ready(function () {
+                $("#datanacimento").mask("00/00/0000")
+
+                $("#formCadastro").validate({
+                    rules: {
+                        datanacimento: {
+                            dateITA: true,
+                            required: true,
+                            anoAntigo: true
+                        },
+
+                        email: {
+                            required: true,
+                            email: true,
+                            emaill:true
+                        },
+                        idade: {
+                            required: true,
+                            min: 1,
+			max: 100
+                        },
+
+                        mesagem: {
+                            required: true,
+                            minlength: 20,
+                            maxlength: 250,
+                            minWords: 4
+                        },
+                        estados:{
+                            required: true,
+                            estadoo: true
+                        }
+                        
+
+
+                    },
+                    messages: {
+
+                        email:
+                                {
+                                    required: "É obrigatorio fornecer um email valido."
+                                },
+
+                        datanacimento: {
+                            required: "É obrigatorio adicionar a data de nacimento"
+                        },
+                        idade: {
+                            required: "É obrigatorio adicionar a idade"
+                        },
+                        mesagem: {
+                            required: "É obrigatorio adicionar uma mensagem"
+                        }
+                    },
+                    submitHandler: function (form) {
+                        $.notify("Cadastrado com sucesso", "success");
+                    }
+                })
+            })
+        </script>
+    </head>
+    <body class="tudo">
+        <div class="row"> 
+            <a class="menu col-md-4 col-12" href="index.html"> <img id="logo" src="imagens/logo.png" alt=""/></a>
+
+            <div  class="navbar-expand-lg col-md-4 col-12 ">
+                <button class="botao"><a class="menu" href="index.html">Inicio</a></button>
+                <button class="botao"><a class="menu " href="Formulario.html">Cadastro</a></button>
+                <button class="botao"><a class="menu " href="Como colar.html">Como colar</a></button>
+            </div>
+            <img class="col-md-4 col-12" src="imagens/download.jpg" alt=""/>
+
+        </div> 
+        <div class="container">
+            <h1>Cadastre</h1>
+            <form name="formCadastro" id="formCadastro" method="post">
+
+                <div class="row">
+                    <label>E-mail</label>
+                    <input type="email" name="email" id="email" placeholder=E-mail style= "width:75%" class="form-control"/>
+                </div>	
+                <div class="row">
+                    <label>Estado</label></br>
+
+                    <select name="estados" id="estados">
+                        <option value="Selecione">Selecione</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+
+                </div>
+                <div class="row">
+                    <label>Data de nacimento</label>
+                    <input type="text" name="datanacimento" style= "width:30%" placeholder="00/00/0000" id="datanacimento" class="form-control"/>
+                </div>
+                <div class="row">
+                    <label>Idade</label>
+                    <input type="number" name="idade" id="idade" style= "width:75%" placeholder="idade" class="form-control"/>
+                </div>
+                <div class="row">
+                    <label>Mensagem</label>
+                    <textarea rows="15" cols="60" name="mensagem" id="mensagem" class="form-control"> </textarea> 
+                </div>
+                <div class="row">
+                    <input type="submit" name="enviar" style= "width:30%" id="enviar"  class="btn btn-primary form-control">
+                </div>     
+            </form>
+        </div>       
+        <img class="col-md-6 col-12 " src="imagens/Bart_quadro_milhouse_frases.png" alt=""/>
+        <div class="col-md-6 hidden-xs">
+            <p class="rodape">Tenha em mente que tudo que você aprende na escola é trabalho de muitas gerações 
+                (...) 
+                Receba essa herança, honre-a, acrescente a ela e, um dia, fielmente, deposite-a nas
+                mãos de seus filhos.<br/>
+                Albert Einstein</p>     
+        </div>
+    </body>
+</html>
